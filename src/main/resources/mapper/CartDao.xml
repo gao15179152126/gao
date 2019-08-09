@@ -13,6 +13,7 @@
         <result property="cartNumber" column="cnum"/>
     </resultMap>
 
+
     <!-- 查询购物车 -->
     <select id="queryCart" resultMap="cartResultMap" parameterType="String">
         select *
