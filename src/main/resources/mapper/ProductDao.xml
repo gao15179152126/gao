@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shopping.dao.ProductDao">
+    <resultMap id="productResultMap" type="Product">
+        <id property="productId" column="pid"/>
+        <result property="productType" column="ptype"/>
+        <result property="productName" column="pname"/>
+        <result property="productPrice" column="pprice"/>
+        <result property="productImage" column="pimage"/>
+        <result property="productAmount" column="pamount"/>
+    </resultMap>
+
+    <!-- 查询所有商品 -->
+    <select id="list" resultMap="productResultMap">
+        select * from product
+    </select>
+
+    <!-- 查询单个商品 -->
+    <select id="queryProductById" resultMap="productResultMap">
+        select *
+        from product
+        where pid = #{productId}
+    </select>
+
+    <!-- 添加商品 -->
+    <insert id="save" parameterType="Product">
+        insert into product(ptype,pname,pprice,pimage,pamount)
+        values(#{product.productType},#{product.productName},#{product.productPrice},#{product.productImage},#{product.productAmount})
+    </insert>
+
+    <!-- 生成订单后删减商品数量 -->
+    <update id="delNum">
+        update product
+        set pamount = pamount - #{orderNumber}
+        where pid = #{productId}
+    </update>
+
+</mapper>

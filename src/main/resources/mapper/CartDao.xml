@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shopping.dao.CartDao">
+    <resultMap id="cartResultMap" type="Cart">
+        <id property="cartId" column="cid"/>
+        <result property="username" column="username"/>
+        <result property="productId" column="pid"/>
+        <result property="productImage" column="pimage"/>
+        <result property="cartMoney" column="cmoney"/>
+        <result property="cartStatus" column="cstatus"/>
+        <result property="cartNumber" column="cnum"/>
+    </resultMap>
+
+    <!-- 查询购物车 -->
+    <select id="queryCart" resultMap="cartResultMap" parameterType="String">
+        select *
+        from cart
+        where username = #{username}
+    </select>
+
+    <!-- 添加购物车 -->
+    <insert id="addCart">
+        insert into cart (username,pid,pimage,cmoney,cstatus,cnum)
+        value (#{username},#{productId},
+        (select pimage from product where pid=#{productId}),
+        (select pprice from product where pid=#{productId}),
+        1,1)
+    </insert>
+
+    <!-- 删除购物车 -->
+    <delete id="deleteCart">
+        delete from cart
+        where username = #{username} and pid = #{productId}
+    </delete>
+
+    <!-- 根据id查找名称 -->
+    <select id="getProductNameById" parameterType="int" resultType="String">
+        select pname
+        from product
+        where pid = #{productId}
+    </select>
+
+</mapper>

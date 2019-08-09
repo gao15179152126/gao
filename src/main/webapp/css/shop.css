@@ -1,0 +1,18 @@
+.buttonAdd {
+    font-weight: bold;
+    color: white;
+    width: 20px;
+    height: 20px;
+    background-color: #4169E1;
+    border: none;
+    float: right;
+}
+.buttonDel {
+    font-weight: bold;
+    color: white;
+    width: 20px;
+    height: 20px;
+    background-color: #4169E1;
+    border: none;
+    float: right;
+}
