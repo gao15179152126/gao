@@ -3,16 +3,170 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shopping.dao.UserDao">
+
     <!-- 目的：为DAO接口方法提供sql语句配置 -->
-    <!-- 查询用户和密码进行登录 -->
-    <select id="findByUsername" resultType="User" parameterType="String">
-        select * from user where username = #{username}
+
+    <!-- 根据用户名重新查询用户信息以更新session中的user -->
+    <select id="updateUserInformation" resultType="User">
+        select *
+        from user
+        where username = #{username}
+        limit 1
     </select>
 
-    <!--增加用户名和密码进行注册  -->
-    <insert id="regist" parameterType="User">
-        insert into user (username,password,name,telephone,vip,point,balance)
-        values (#{user.username},#{user.password},#{user.name},#{user.telephone},0,0,0)
+    <select id="updateUserInformationById" resultType="User">
+        select *
+        from user
+        where id = #{id}
+        limit 1
+    </select>
+
+    <!-- 查询用户名是否存在 -->
+    <select id="checkUsernameExist" parameterType="string" resultType="int">
+        select count(id)
+        from user
+        where username = #{username}
+    </select>
+
+    <!-- 新用户注册 -->
+    <insert id="register" parameterType="User">
+        insert into user (username, password, name, telephone, headimage)
+            value (#{user.username}, #{user.password}, #{user.name}, #{user.telephone}, #{user.headImage})
     </insert>
 
+    <!-- 根据用户名查询密码 -->
+    <select id="queryPassword" parameterType="string" resultType="string">
+        select password
+        from user
+        where username = #{username}
+        limit 1
+    </select>
+
+    <!-- 修改用户密码 -->
+    <update id="changePassword">
+        update user
+        set password = #{password}
+        where username = #{username}
+    </update>
+
+    <!-- 根据用户名查询余额 -->
+    <select id="queryUserBalance" parameterType="string" resultType="double">
+        select balance
+        from user
+        where username = #{username}
+    </select>
+
+    <!-- 改变用户余额 -->
+    <update id="changeUserBalance">
+        update user
+        set balance = balance + #{money}
+        where username = #{username}
+    </update>
+
+    <!-- 改变用户积分 -->
+    <update id="changeUserPoint">
+        update user
+        set point = point + #{point}
+        where username = #{username}
+    </update>
+
+    <!-- 通过用户id改变用户积分 -->
+    <update id="changeUserPointById">
+        update user
+        set point = point + #{point}
+        where id = #{id}
+    </update>
+
+    <!-- 计算所有用户数量 -->
+    <select id="countAllUser" resultType="int">
+        select count(id)
+        from user
+    </select>
+
+    <!-- 管理员通过页码查询用户信息 -->
+    <select id="queryAllUserByPage" resultType="User" parameterType="int">
+        select id,
+               username,
+               password,
+               name,
+               telephone,
+               balance,
+               vip,
+               point,
+               userstatus
+        from user
+        limit #{start},#{row}
+    </select>
+
+    <!-- 计算所有相关用户数量 -->
+    <select id="countAllUserByUsername" resultType="int">
+        select count(id)
+        from user
+        where username like #{username}
+    </select>
+
+    <!-- 根据页码查询相关用户名的用户信息 -->
+    <select id="queryAllUserByPageAndName" resultType="User">
+        select id,
+               username,
+               password,
+               name,
+               telephone,
+               balance,
+               vip,
+               point,
+               userstatus
+        from user
+        where username like #{username}
+        limit #{start},#{row}
+    </select>
+
+    <!-- 改变用户状态 -->
+    <update id="changeUserStatus">
+        update user
+        set userstatus = #{status}
+        where id = #{id}
+    </update>
+
+    <!-- 用户积分清零 -->
+    <update id="clearUserPoint">
+        update user
+        set point = 0
+        where id = #{id}
+    </update>
+
+    <!-- 改变用户余额 -->
+    <update id="updateUserBalance">
+        update user
+        set balance = balance + #{money}
+        where id = #{id}
+    </update>
+
+    <!-- 升级用户VIP -->
+    <update id="addUserVip" parameterType="int">
+        update user
+        set vip = vip + 1
+        where id = #{id}
+    </update>
+
+    <!-- 查询用户积分 -->
+    <select id="queryUserPointById" parameterType="int" resultType="double">
+        select point
+        from user
+        where id = #{id}
+    </select>
+
+    <!-- 查询用户vip-->
+    <select id="queryUserVipById" parameterType="int" resultType="int">
+        select vip
+        from user
+        where id = #{id}
+    </select>
+
+    <!-- 查询用户状态 -->
+    <select id="queryUserStatusByUsername" parameterType="string" resultType="string">
+        select userstatus
+        from user
+        where username = #{username}
+    </select>
 </mapper>

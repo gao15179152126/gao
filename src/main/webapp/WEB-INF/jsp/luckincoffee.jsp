@@ -8,22 +8,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <jsp:include page="../pack/link/head.jsp"></jsp:include>
+    <jsp:include page="../common/link/head.jsp"></jsp:include>
     <link rel="stylesheet" type="text/css" href="/extra/video-7.5.5/css/video-js.min.css">
     <script src="/extra/video-7.5.5/js/video.min.js"></script>
     <title>LuckinCoffee</title>
 </head>
 <body>
-<jsp:include page="../pack/head.jsp"></jsp:include>
-<div css="container">
-    <div class="jumbotron">
-        <video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" width="1280" height="528"
-               poster="http://video-js.zencoder.com/oceans-clip.png"
+<jsp:include page="../common/head.jsp"></jsp:include>
+    <div style="margin-top: 50px">
+        <video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" width="1280" height="556"
                data-setup="{}">
             <source src="/videos/luckincoffee_TVC30.mp4" type='video/mp4' />
         </video>
     </div>
-</div>
 </body>
 <script type="text/javascript">
     var myPlayer = videojs('example_video_1');

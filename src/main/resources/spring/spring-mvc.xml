@@ -25,9 +25,9 @@
     <!-- 文件上传的解析器 -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <!-- 上传图片的最大尺寸 10M-->
-        <property name="maxUploadSize" value="10485760"></property>
+        <property name="maxUploadSize" value="10485760"/>
         <!-- 默认编码 -->
-        <property name="defaultEncoding" value="utf-8"></property>
+        <property name="defaultEncoding" value="utf-8"/>
     </bean>
 
     <!-- 2：配置jsp显示ViewResolver -->
@@ -40,15 +40,29 @@
     <!-- 3：扫描mvc相关的bean -->
     <context:component-scan base-package="com.shopping.controller" />
 
-<!--    &lt;!&ndash; 配置拦截器 &ndash;&gt;
+    <!-- 配置拦截器 -->
     <mvc:interceptors>
-        &lt;!&ndash; 配置登陆拦截器 &ndash;&gt;
+        <!-- 配置登陆拦截器 -->
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
-            <bean class="com.shopping.interceptor.LoginInterceptor"></bean>
+            <mvc:exclude-mapping path="/luckincoffee/**"/>
+            <mvc:exclude-mapping path="/index"/>
+            <mvc:exclude-mapping path="/user/login"/>
+            <mvc:exclude-mapping path="/user/checkUsername"/>
+            <mvc:exclude-mapping path="/user/register"/>
+            <mvc:exclude-mapping path="/user/checkLogin"/>
+            <mvc:exclude-mapping path="/user/outLogin"/>
+            <mvc:exclude-mapping path="/product/singleProductShow"/>
+            <bean class="com.shopping.interceptor.LoginInterceptor"/>
         </mvc:interceptor>
-    </mvc:interceptors>-->
+        <!-- 配置登陆拦截器 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/admin/**"/>
+            <bean class="com.shopping.interceptor.AdminInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 
+    <!-- 配置json解析器 -->
     <bean id="jsonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
         <property name="supportedMediaTypes">
             <list>

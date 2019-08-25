@@ -1,7 +1,5 @@
 package com.shopping.pojo;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import java.io.Serializable;
 
 /**
@@ -18,6 +16,15 @@ public class Product implements Serializable {
     private double productPrice;
     private String productImage;
     private int productAmount;
+    private String productDetail;
+
+    public String getProductDetail() {
+        return productDetail;
+    }
+
+    public void setProductDetail(String productDetail) {
+        this.productDetail = productDetail;
+    }
 
     public int getProductId() {
         return productId;

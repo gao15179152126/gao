@@ -10,6 +10,7 @@
         <result property="productPrice" column="pprice"/>
         <result property="productImage" column="pimage"/>
         <result property="productAmount" column="pamount"/>
+        <result property="productDetail" column="pdetail"/>
     </resultMap>
 
     <!-- 查询所有商品 -->
@@ -26,8 +27,8 @@
 
     <!-- 添加商品 -->
     <insert id="save" parameterType="Product">
-        insert into product(ptype,pname,pprice,pimage,pamount)
-        values(#{product.productType},#{product.productName},#{product.productPrice},#{product.productImage},#{product.productAmount})
+        insert into product(ptype,pname,pprice,pimage,pamount,pdetail)
+        values(#{product.productType},#{product.productName},#{product.productPrice},#{product.productImage},#{product.productAmount},#{product.productDetail})
     </insert>
 
     <!-- 生成订单后删减商品数量 -->
@@ -37,4 +38,52 @@
         where pid = #{productId}
     </update>
 
+    <!-- 改变商品库存数量 -->
+    <update id="changeProductNumberById">
+        update product
+        set pamount = pamount + #{productNumber}
+        where pid = #{productId}
+    </update>
+
+    <!-- 通过商品类别查询商品 -->
+    <select id="queryProductByType" parameterType="string" resultMap="productResultMap">
+        select pid, pname, pprice, pimage, pamount
+        from product
+        where ptype = #{type}
+    </select>
+
+    <!-- 通过商品Id设置商品数量 -->
+    <update id="setProductNumberById">
+        update product
+        set pamount = #{number}
+        where pid = #{id}
+    </update>
+
+    <!-- 通过商品Id设置商品单价 -->
+    <update id="setProductPriceById">
+        update product
+        set pprice = #{price}
+        where pid = #{id}
+    </update>
+
+    <!-- 通过商品Id设置商品名称 -->
+    <update id="setProductNameById">
+        update product
+        set pname = #{name}
+        where pid = #{id}
+    </update>
+
+    <!-- 通过商品Id查询商品图片 -->
+    <select id="queryProductImageById" resultType="string">
+        select pimage
+        from product
+        where pid = #{id}
+    </select>
+
+    <!-- 通过商品Id设置商品图片 -->
+    <update id="setProductImageById">
+        update product
+        set pimage = #{image}
+        where pid = #{id}
+    </update>
 </mapper>

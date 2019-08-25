@@ -1,6 +1,6 @@
 package com.shopping.pojo;
 
-import javax.naming.Name;
+import java.util.List;
 
 /**
  * @ClassName User
@@ -18,6 +18,33 @@ public class User {
     private int vip;
     private double point;
     private double balance;
+    private String headImage;
+    private String userStatus;
+    private List<UserAddress> userAddressList;
+
+    public String getUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(String userStatus) {
+        this.userStatus = userStatus;
+    }
+
+    public List<UserAddress> getUserAddressList() {
+        return userAddressList;
+    }
+
+    public void setUserAddressList(List<UserAddress> userAddressList) {
+        this.userAddressList = userAddressList;
+    }
+
+    public String getHeadImage() {
+        return headImage;
+    }
+
+    public void setHeadImage(String headImage) {
+        this.headImage = headImage;
+    }
 
     public int getId() {
         return id;

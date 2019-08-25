@@ -53,6 +53,8 @@ public class ProductServiceImpl implements ProductService {
         // 保存到数据库
         product.setProductImage(newFileName);
         productDao.save(product);
-        return "redirect:/product/shopShow";
+        return "1";
     }
+
+
 }

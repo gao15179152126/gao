@@ -19,4 +19,6 @@ public interface ProductService {
     List<Product> list();
     Product queryProductById(int productId);
     String save(MultipartFile productImage, Product product, Model model) throws IOException;
+
+
 }

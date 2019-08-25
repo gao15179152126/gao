@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @ClassName UserController
@@ -21,82 +23,149 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/user")
-
-//这里用了@SessionAttributes，可以直接把model中的user(也就key)放入其中
-//这样保证了session中存在user这个对象
-@SessionAttributes("user")
-
 public class UserController {
 
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     /**
-     *正常访问login页面
+     * 检查用户名是否存在
+     */
+    @RequestMapping("/checkUsername")
+    @ResponseBody
+    public Map checkUsername(String username) {
+        //map集合用来存放返回值
+        Map<String, String> map = new HashMap<>(1);
+        if (userService.checkUsername(username) > 0) {
+            map.put("result", "1");
+        } else {
+            map.put("result", "0");
+        }
+        return map;
+    }
+
+    /**
+     * 新用户注册
+     */
+    @RequestMapping("/register")
+    public String register(User user, MultipartFile file, Model model) {
+        String msg = userService.register(user, file);
+        model.addAttribute("msg", msg);
+        return "/login";
+    }
+
+    /**
+     * 正常访问login页面
      */
     @RequestMapping("/login")
-    public String login(){
+    public String login() {
         return "login";
     }
 
     /**
-     *数据库检查用户是否正确
+     * 登录验证
      */
     @RequestMapping("/checkLogin")
-    public String checkLogin(User user,Model model){
-        user = userService.checkLogin(user.getUsername(), user.getPassword());
-        //若有user则添加到model里并且跳转到成功页面
-        if(user != null){
-            model.addAttribute("user",user);
-            return "redirect:../product/shopShow";
+    public String checkLogin(String username, String password, Model model, HttpSession session) {
+        String result = userService.checkLogin(username, password);
+        String url = (String) session.getAttribute("url");
+        String addCart = "/cart/addCart";
+        String success = "登录成功";
+        if (success.equals(result)) {
+            User user = userService.updateUserInformation(username);
+            session.setAttribute("user", user);
+            if ("".equals(url) || url == null) {
+                return "redirect:/luckincoffee/shop";
+            } else {
+                if (addCart.equals(url)) {
+                    String productId = String.valueOf(session.getAttribute("productId"));
+                    String cartNumber = String.valueOf(session.getAttribute("cartNumber"));
+                    session.removeAttribute("productId");
+                    session.removeAttribute("cartNumber");
+                    session.removeAttribute("url");
+                    return "redirect:" + url + "1?productId=" + productId + "&cartNumber=" + cartNumber;
+                }
+                session.removeAttribute("url");
+                return "redirect:" + url;
+            }
+        } else {
+            model.addAttribute("msg", result);
+            return "login";
         }
-        return "/WEB-INF/test/fail.jsp";
     }
 
     /**
-     *测试超链接跳转到另一个页面是否可以取到session值
-     */
-    @RequestMapping("/anotherpage")
-    public String hrefpage(){
-
-        return "../test/anotherpage";
-    }
-
-    /**
-     *注销方法
+     * 注销方法
      */
     @RequestMapping("/outLogin")
-    public String outLogin(HttpSession session, SessionStatus sessionStatus){
-        //通过session.invalidata()方法来注销当前的session
+    public String outLogin(HttpSession session) {
+        //注销当前的session
         session.invalidate();
-        sessionStatus.setComplete();
         return "redirect:login";
     }
 
     /**
-     *注册页面
-     */
-    @RequestMapping("/regist")
-    public String regist(){
-        return "regist";
-    }
-
-    /**
-     *注册
-     */
-    @RequestMapping("/doRegist")
-    public String doRegist(User user, Model model){
-        System.out.println(user.getUsername());
-        userService.regist(user);
-        return "../test/success";
-    }
-
-    /**
-     *个人信息界面
+     * 个人信息界面
      */
     @RequestMapping("/personal")
-    public String personal(){
+    public String personal() {
         return "personal";
     }
 
+    /**
+     * 检查旧密码是否正确
+     */
+    @RequestMapping("checkPassword")
+    @ResponseBody
+    public Map checkPassword(String password, HttpSession session) {
+        //map集合用来存放返回值
+        Map<String, String> map = new HashMap<>(1);
+        String username = ((User) session.getAttribute("user")).getUsername();
+        String result = userService.checkOldPassword(username, password);
+        map.put("result", result);
+        return map;
+    }
+
+    /**
+     * 修改用户密码
+     */
+    @RequestMapping("changePassword")
+    @ResponseBody
+    public Map changePassword(String password, HttpSession session) {
+        String username = ((User) session.getAttribute("user")).getUsername();
+        Map<String, Integer> map = new HashMap<>(1);
+        map.put("result", userService.changePassword(username, password));
+        session.setAttribute("user", userService.updateUserInformation(username));
+        return map;
+    }
+
+    /**
+     * 用户充值金额
+     */
+    @RequestMapping("investMoney")
+    @ResponseBody
+    public Map investMoney(double money, HttpSession session) {
+        int id = ((User) session.getAttribute("user")).getId();
+        Map<String, Integer> map = new HashMap<>(1);
+        map.put("result", userService.investMoney(id, money));
+        session.setAttribute("user", userService.updateUserInformationById(id));
+        return map;
+    }
+
+    /**
+     * 用户升级vip
+     */
+    @RequestMapping("upgradeVip")
+    @ResponseBody
+    public Map upgradeVip(HttpSession session) {
+        int id = ((User) session.getAttribute("user")).getId();
+        Map<String, String> map = new HashMap<>(1);
+        map.put("result", userService.addUserVip(id));
+        session.setAttribute("user", userService.updateUserInformationById(id));
+        return map;
+    }
 }

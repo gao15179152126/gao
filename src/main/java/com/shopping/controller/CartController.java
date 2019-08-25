@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -22,16 +23,32 @@ import java.util.List;
 @RequestMapping("/cart")
 public class CartController {
 
+    private final CartService cartService;
+
     @Autowired
-    private CartService cartService;
+    public CartController(CartService cartService) {
+        this.cartService = cartService;
+    }
 
     /**
      * 添加至购物车
      */
     @RequestMapping("/addCart")
-    public String addCart(String username, int productId){
-        cartService.addCart(username,productId);
-        return "redirect:cartShow";
+    @ResponseBody
+    public String addCart(HttpSession httpSession, int productId, int cartNumber){
+        String username = ((User) httpSession.getAttribute("user")).getUsername();
+        cartService.addCart(username,productId,cartNumber);
+        return "1";
+    }
+
+    /**
+     * 添加购物车后再登录
+     */
+    @RequestMapping("/addCart1")
+    public String addCart1(HttpSession httpSession, int productId, int cartNumber){
+        String username = ((User) httpSession.getAttribute("user")).getUsername();
+        cartService.addCart(username,productId,cartNumber);
+        return "redirect:/luckincoffee/shop";
     }
 
     /**
@@ -52,8 +69,29 @@ public class CartController {
      * 从购物车删除
      */
     @RequestMapping("/deleteCart")
-    public String deleteCart(String username, int productId){
-        cartService.deleteCart(username,productId);
+    public String deleteCart(HttpSession httpSession, int productId){
+        User user = (User)httpSession.getAttribute("user");
+        cartService.deleteCart(user.getUsername(),productId);
         return "redirect:cartShow";
+    }
+
+    /**
+     * 购物车中单个商品增加
+     */
+    @RequestMapping("singleAdd")
+    public String singleAdd(HttpSession httpSession, int productId){
+        String username = ((User)httpSession.getAttribute("user")).getUsername();
+        cartService.cartProductNumberAdd(username, productId, 1);
+        return "";
+    }
+
+    /**
+     * 购物车中单个商品减少
+     */
+    @RequestMapping("singleDel")
+    public String singleDel(HttpSession httpSession, int productId){
+        String username = ((User)httpSession.getAttribute("user")).getUsername();
+        cartService.cartProductNumberAdd(username, productId, -1);
+        return "";
     }
 }

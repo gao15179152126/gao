@@ -18,16 +18,19 @@ import javax.servlet.http.HttpSession;
 public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
-        String requestURL = request.getRequestURI();
-        if(requestURL.indexOf("/login")>=0||requestURL.indexOf("/regist")>=0||requestURL.indexOf("/doRegist")>=0||requestURL.indexOf("/checkLogin")>=0){
-            return true;
+        String requestUrl = request.getRequestURI();
+        String addCart = "/cart/addCart";
+        HttpSession session = request.getSession();
+        if (addCart.equals(requestUrl)){
+            session.setAttribute("productId", request.getParameter("productId"));
+            session.setAttribute("cartNumber", request.getParameter("cartNumber"));
         }
-        HttpSession httpSession = request.getSession();
-        User user = (User)httpSession.getAttribute("user");
+        User user = (User)session.getAttribute("user");
         if (user != null){
             return true;
         }else {
-            request.setAttribute("smg","您还没有登录");
+            session.setAttribute("url",requestUrl);
+            request.setAttribute("msg","您还没有登录");
             request.getRequestDispatcher("/user/login").forward(request,response);
             return false;
         }
@@ -35,12 +38,12 @@ public class LoginInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
+    public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) {
 
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
+    public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) {
 
     }
 }

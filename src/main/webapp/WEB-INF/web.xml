@@ -27,6 +27,7 @@
         <url-pattern>/css/*</url-pattern>
         <url-pattern>/js/*</url-pattern>
         <url-pattern>/extra/*</url-pattern>
+        <url-pattern>/favicon.ico</url-pattern>
     </servlet-mapping>
 
     <!-- 配置SpringMVC 前端控制器-->

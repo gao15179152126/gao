@@ -7,23 +7,87 @@
         <id property="orderId" column="oid"/>
         <result property="orderDate" column="odate"/>
         <result property="username" column="username"/>
-        <result property="productId" column="pid"/>
+        <result property="orderStatus" column="ostatus"/>
         <result property="orderMoney" column="omoney"/>
-        <result property="orderNumber" column="onum"/>
+        <result property="orderNo" column="ono"/>
+        <result property="address" column="address"/>
+    </resultMap>
+    <resultMap id="orderDetailResultMap" type="OrderDetail">
+        <id property="orderDetailId" column="odid"/>
+        <result property="productId" column="pid"/>
+        <result property="productPrice" column="pprice"/>
+        <result property="productNumber" column="pnum"/>
+        <result property="orderNo" column="ono"/>
+    </resultMap>
+    <resultMap id="orderDateTimeResultMap" type="OrderDateTime">
+        <result property="dateTime" column="odate"/>
+        <result property="orderNo" column="ono"/>
     </resultMap>
 
-    <!-- 自动生成订单 -->
-    <insert id="autoAddOrder" >
-        insert into orderlist(odate,pid,username,omoney,onum)
-        value (#{order.orderDate},#{order.productId},#{order.username},#{order.orderMoney},#{order.orderNumber})
+    <!-- 生成订单细节 -->
+    <insert id="generateOrderDetail">
+        insert into orderdetail(pid, pprice, pnum, ono)
+            value (#{orderDetail.productId}, #{orderDetail.productPrice}, #{orderDetail.productNumber},
+                   #{orderDetail.orderNo})
     </insert>
 
-    <!-- 根据用户名称查询 -->
+    <!-- 生成单号记录 -->
+    <insert id="generateOrderNo">
+        insert into orderlist(odate, username, omoney, ostatus, ono)
+            value (#{order.orderDate}, #{order.username}, #{order.orderMoney}, #{order.orderStatus}, #{order.orderNo})
+    </insert>
+
+    <!-- 查询当前商品库存数量 -->
+    <select id="getProductNumberById" parameterType="int" resultType="int">
+        select pamount
+        from product
+        where pid = #{productId}
+    </select>
+
+    <!-- 根据用户名称查询订单 -->
     <select id="queryOrderByUsername" resultMap="orderResultMap">
         select *
         from orderlist
         where username = #{username}
+        order by oid desc
     </select>
+
+    <!-- 根据单号查询订单内容 -->
+    <select id="queryOrderDetailByNo" resultMap="orderDetailResultMap">
+        select *
+        from orderdetail
+        where ono = #{orderNo}
+    </select>
+
+    <!-- 订单状态改变 -->
+    <update id="changeOrderStatus">
+        update orderlist
+        set ostatus = #{orderStatus}
+        where ono = #{orderNo}
+    </update>
+
+    <!-- 订单金额改变 -->
+    <update id="changeOrderMoney">
+        update orderlist
+        set omoney = #{orderMoney}
+        where ono = #{orderNo}
+    </update>
+
+    <!-- 根据订单号查询订单金额 -->
+    <select id="queryOrderMoneyByNo" resultType="double">
+        SELECT omoney
+        FROM orderlist
+        WHERE ono = #{orderNo}
+    </select>
+
+    <!-- 查询所有未完成订单时间 -->
+    <select id="queryAllOrderTime" resultMap="orderDateTimeResultMap">
+        select odate,ono
+        from orderlist
+        where ostatus = '未完成'
+        order by oid desc
+    </select>
+
 
     <!-- 查询所有订单 -->
     <select id="queryAllOrder" resultMap="orderResultMap">
@@ -31,4 +95,41 @@
         from orderlist
     </select>
 
+    <!-- 根据状态查询订单 -->
+    <select id="queryOrderByStatus" resultMap="orderResultMap">
+        select oid, odate, username, omoney, ostatus, ono, address
+        from orderlist
+        where ostatus = #{status}
+    </select>
+
+    <!-- 根据id查找名称 -->
+    <select id="queryProductNameById" parameterType="int" resultType="String">
+        select pname
+        from product
+        where pid = #{productId}
+        limit 1
+    </select>
+
+    <!-- 根据单号查询订单 -->
+    <select id="queryOrderByNo" resultMap="orderResultMap">
+        select oid, odate, username, omoney, ostatus, ono, address
+        from orderlist
+        where ono = #{orderNo}
+        order by oid desc
+    </select>
+
+    <!-- 根据起止时间查询订单 -->
+    <select id="queryOrderByDate" resultMap="orderResultMap">
+        select oid, odate, username, omoney, ostatus, ono, address
+        from orderlist
+        where odate between #{startDate} and #{endDate}
+        order by oid desc
+    </select>
+
+    <!-- 改变订单地址 -->
+    <update id="changeOrderAddress">
+        update orderlist
+        set address = #{orderAddress}
+        where ono = #{orderNo}
+    </update>
 </mapper>

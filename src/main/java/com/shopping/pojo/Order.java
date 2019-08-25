@@ -1,6 +1,8 @@
 package com.shopping.pojo;
 
+
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * @ClassName Order
@@ -12,17 +14,35 @@ import java.sql.Timestamp;
 public class Order {
     private int orderId;
     private Timestamp orderDate;
-    private int productId;
     private String username;
+    private String orderStatus;
     private double orderMoney;
-    private int orderNumber;
+    private String orderNo;
+    private List<OrderDetail> orderDetails;
+    private String address;
 
-    public int getOrderNumber() {
-        return orderNumber;
+    public String getAddress() {
+        return address;
     }
 
-    public void setOrderNumber(int orderNumber) {
-        this.orderNumber = orderNumber;
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public List<OrderDetail> getOrderDetails() {
+        return orderDetails;
+    }
+
+    public void setOrderDetails(List<OrderDetail> orderDetails) {
+        this.orderDetails = orderDetails;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
     }
 
     public int getOrderId() {
@@ -41,20 +61,20 @@ public class Order {
         this.orderDate = orderDate;
     }
 
-    public int getProductId() {
-        return productId;
-    }
-
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
-
     public String getUsername() {
         return username;
     }
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
     public double getOrderMoney() {
@@ -64,4 +84,5 @@ public class Order {
     public void setOrderMoney(double orderMoney) {
         this.orderMoney = orderMoney;
     }
+
 }

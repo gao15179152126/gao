@@ -58,13 +58,14 @@ public class ProductController {
      * 上传商品
      */
     @RequestMapping("/save")
+    @ResponseBody
     public String save(MultipartFile file,Product product,Model model){
         try {
             return productService.save(file,product,model);
         }catch (IOException e){
             e.printStackTrace();
         }
-        return null;
+        return "1";
     }
 
     /**

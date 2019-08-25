@@ -12,8 +12,9 @@ import java.util.List;
  * @Version 1.0
  **/
 public interface CartService {
-    void addCart(String username, int productId);
+    void addCart(String username, int productId, int cartNumber);
     List<Cart> queryCart(String username);
     void deleteCart(String username, int productId);
     String getProductNameById(int id);
+    int cartProductNumberAdd(String username, int productId, int cartNumber);
 }
