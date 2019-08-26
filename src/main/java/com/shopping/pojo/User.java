@@ -10,16 +10,49 @@ import java.util.List;
  * @Version 1.0
  **/
 public class User {
+    /**
+     * 用户id
+     */
     private int id;
+    /**
+     * 用户名
+     */
     private String username;
+    /**
+     * 用户密码
+     */
     private String password;
+    /**
+     * 用户昵称
+     */
     private String name;
+    /**
+     * 用户电话
+     */
     private String telephone;
+    /**
+     * 用户会员等级
+     */
     private int vip;
+    /**
+     * 用户积分
+     */
     private double point;
+    /**
+     * 用户余额
+     */
     private double balance;
+    /**
+     * 用户头像
+     */
     private String headImage;
+    /**
+     * 用户状态
+     */
     private String userStatus;
+    /**
+     * 用户地址
+     */
     private List<UserAddress> userAddressList;
 
     public String getUserStatus() {

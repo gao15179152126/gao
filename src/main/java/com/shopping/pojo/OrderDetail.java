@@ -8,10 +8,25 @@ package com.shopping.pojo;
  * @Version 1.0
  **/
 public class OrderDetail {
+    /**
+     * 订单详情id
+     */
     private int orderDetailId;
+    /**
+     * 商品id
+     */
     private int productId;
+    /**
+     * 商品名称
+     */
     private String productName;
+    /**
+     * 商品价格
+     */
     private double productPrice;
+    /**
+     * 商品数量
+     */
     private int productNumber;
 
     public String getProductName() {

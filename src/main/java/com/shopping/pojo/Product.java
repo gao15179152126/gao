@@ -10,12 +10,33 @@ import java.io.Serializable;
  * @Version 1.0
  **/
 public class Product implements Serializable {
+    /**
+     * 商品id
+     */
     private int productId;
+    /**
+     * 商品类型
+     */
     private String productType;
+    /**
+     * 商品名称
+     */
     private String productName;
+    /**
+     * 商品价格
+     */
     private double productPrice;
+    /**
+     * 商品图片
+     */
     private String productImage;
+    /**
+     * 商品数量
+     */
     private int productAmount;
+    /**
+     * 商品详情
+     */
     private String productDetail;
 
     public String getProductDetail() {

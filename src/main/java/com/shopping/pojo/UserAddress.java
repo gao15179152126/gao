@@ -8,8 +8,17 @@ package com.shopping.pojo;
  * @Version 1.0
  **/
 public class UserAddress {
+    /**
+     * 用户地址id
+     */
     private int userAddressId;
+    /**
+     * 用户名
+     */
     private String username;
+    /**
+     * 地址
+     */
     private String address;
 
     public int getUserAddressId() {

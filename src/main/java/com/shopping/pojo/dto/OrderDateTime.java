@@ -10,7 +10,13 @@ import java.util.Date;
  * @Version 1.0
  **/
 public class OrderDateTime {
+    /**
+     * 订单号
+     */
     private String orderNo;
+    /**
+     * 订单时间
+     */
     private Date dateTime;
 
     public String getOrderNo() {

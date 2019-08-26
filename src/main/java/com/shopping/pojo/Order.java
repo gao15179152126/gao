@@ -12,13 +12,37 @@ import java.util.List;
  * @Version 1.0
  **/
 public class Order {
+    /**
+     * 订单id
+     */
     private int orderId;
+    /**
+     * 下单时间
+     */
     private Timestamp orderDate;
+    /**
+     * 用户名
+     */
     private String username;
+    /**
+     * 订单状态
+     */
     private String orderStatus;
+    /**
+     * 订单金额
+     */
     private double orderMoney;
+    /**
+     * 订单号
+     */
     private String orderNo;
+    /**
+     * 订单详情
+     */
     private List<OrderDetail> orderDetails;
+    /**
+     * 订单地址
+     */
     private String address;
 
     public String getAddress() {

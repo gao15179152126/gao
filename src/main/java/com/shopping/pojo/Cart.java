@@ -8,12 +8,33 @@ package com.shopping.pojo;
  * @Version 1.0
  **/
 public class Cart {
+    /**
+     * 购物车id
+     */
     private int cartId;
+    /**
+     * 购物车用户名
+     */
     private String username;
+    /**
+     * 商品id
+     */
     private int productId;
+    /**
+     * 商品名称
+     */
     private String productName;
+    /**
+     * 商品图片
+     */
     private String productImage;
+    /**
+     * 购物车商品金额
+     */
     private double cartMoney;
+    /**
+     * 购物车商品数量
+     */
     private int cartNumber;
 
     public String getProductName() {

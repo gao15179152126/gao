@@ -91,7 +91,7 @@
         function investMoney() {
             var money = $("#investMoney").val();
             $.post("/user/investMoney", {money: money}, function (data) {
-                alert("success");
+                alert("充值成功");
                 window.location.reload();
             })
         }
