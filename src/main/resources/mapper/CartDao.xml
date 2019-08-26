@@ -23,14 +23,16 @@
 
     <!-- 添加购物车 -->
     <insert id="addCart">
-        insert into cart (username,pid,cnum,cmoney,cstatus)
-        value (#{username},#{productId},#{cartNumber},(select pprice from product where pid=#{productId}),1)
+        insert into cart (username, pid, cnum, cmoney, cstatus)
+            value (#{username}, #{productId}, #{cartNumber}, (select pprice from product where pid = #{productId}), 1)
     </insert>
 
     <!-- 删除购物车 -->
     <delete id="deleteCart">
-        delete from cart
-        where username = #{username} and pid = #{productId}
+        delete
+        from cart
+        where username = #{username}
+          and pid = #{productId}
     </delete>
 
     <!-- 根据id查找名称 -->
@@ -44,14 +46,16 @@
     <update id="cartProductNumberAdd">
         update cart
         set cnum = cnum + #{addNumber}
-        where username = #{username} and pid = #{productId}
+        where username = #{username}
+          and pid = #{productId}
     </update>
 
     <!-- 查询商品是否存在数据库中 -->
     <select id="productIsOrNotExistCart" resultType="int">
         select count(pid)
         from cart
-        where username = #{username} and pid = #{productId}
+        where username = #{username}
+          and pid = #{productId}
         limit 1
     </select>
 

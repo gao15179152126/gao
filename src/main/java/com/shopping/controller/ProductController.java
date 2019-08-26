@@ -7,7 +7,6 @@ import com.shopping.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,17 +26,21 @@ import java.util.List;
 @RequestMapping("/product")
 public class ProductController {
 
+    private final ProductService productService;
+
     @Autowired
-    private ProductService productService;
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
 
     /**
      * 商品展示
      */
     @RequestMapping("/shopShow")
-    public ModelAndView list(Model model){
+    public ModelAndView list() {
         List<Product> lists = productService.list();
         ModelAndView mav = new ModelAndView();
-        mav.addObject("list",lists);
+        mav.addObject("list", lists);
         mav.setViewName("shopShow");
         System.out.println(lists);
         return mav;
@@ -46,9 +49,9 @@ public class ProductController {
     /**
      * 单个商品展示
      */
-    @RequestMapping(value = "/singleProductShow", produces="application/json;charset=utf-8")
+    @RequestMapping(value = "/singleProductShow", produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String queryProductById(int productId,Model model) throws JsonProcessingException {
+    public String queryProductById(int productId) throws JsonProcessingException {
         Product singleProduct = productService.queryProductById(productId);
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(singleProduct);
@@ -59,10 +62,10 @@ public class ProductController {
      */
     @RequestMapping("/save")
     @ResponseBody
-    public String save(MultipartFile file,Product product,Model model){
+    public String save(MultipartFile file, Product product, Model model) {
         try {
-            return productService.save(file,product,model);
-        }catch (IOException e){
+            return productService.save(file, product, model);
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return "1";
@@ -72,7 +75,7 @@ public class ProductController {
      * 上传商品页面
      */
     @RequestMapping("/toSave")
-    public String toSave(){
+    public String toSave() {
         return "save";
     }
 }

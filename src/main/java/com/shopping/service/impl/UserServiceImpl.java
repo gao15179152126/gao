@@ -91,7 +91,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public String addUserVip(int id) {
         double userPoint = userDao.queryUserPointById(id);
         int userVip = userDao.queryUserVipById(id);

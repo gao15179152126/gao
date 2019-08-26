@@ -15,7 +15,8 @@
 
     <!-- 查询所有商品 -->
     <select id="list" resultMap="productResultMap">
-        select * from product
+        select *
+        from product
     </select>
 
     <!-- 查询单个商品 -->
@@ -27,8 +28,9 @@
 
     <!-- 添加商品 -->
     <insert id="save" parameterType="Product">
-        insert into product(ptype,pname,pprice,pimage,pamount,pdetail)
-        values(#{product.productType},#{product.productName},#{product.productPrice},#{product.productImage},#{product.productAmount},#{product.productDetail})
+        insert into product(ptype, pname, pprice, pimage, pamount, pdetail)
+        values (#{product.productType}, #{product.productName}, #{product.productPrice}, #{product.productImage},
+                #{product.productAmount}, #{product.productDetail})
     </insert>
 
     <!-- 生成订单后删减商品数量 -->

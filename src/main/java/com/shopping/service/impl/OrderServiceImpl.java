@@ -58,11 +58,11 @@ public class OrderServiceImpl implements OrderService {
     /**
      * 事务模式提交订单
      */
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public String submitOrder(List<OrderDetail> orderDetails, String username, String userId, int vip) {
         //时间+用户ID生成订单号
-        String orderNo = String.valueOf(System.currentTimeMillis()) + userId;
+        String orderNo = System.currentTimeMillis() + userId;
         //订单总金额
         double total = 0;
         //判断库存
@@ -98,11 +98,10 @@ public class OrderServiceImpl implements OrderService {
     /**
      * 事务模式订单付款
      */
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public String payForOrder(String orderNo, User user, String address) {
-        double orderMoney = orderDao.queryOrderMoneyByNo(orderNo);
-        double actualCost = orderMoney;  //折扣计算*(1-0.02*user.getVip());
+        double actualCost = orderDao.queryOrderMoneyByNo(orderNo);
         String username = user.getUsername();
         if (user.getBalance() < actualCost) {
             return "余额不足";
@@ -124,7 +123,7 @@ public class OrderServiceImpl implements OrderService {
     /**
      * 事务模式取消订单
      */
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public String cancelOrder(String orderNo) {
         //修改订单状态

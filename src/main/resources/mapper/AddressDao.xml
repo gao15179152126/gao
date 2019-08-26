@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shopping.dao.AddressDao">
+    <resultMap id="AddressResultMap" type="UserAddress">
+        <id property="userAddressId" column="uaid"/>
+        <result property="username" column="username"/>
+        <result property="address" column="address"/>
+    </resultMap>
+
+    <!-- 添加用户地址 -->
+    <insert id="addUserAddress">
+        insert into useraddress (username, address)
+            value (#{username}, #{address})
+    </insert>
+
+    <!-- 查询用户地址 -->
+    <select id="queryUserAddress" resultMap="AddressResultMap">
+        select address,uaid
+        from useraddress
+        where username = #{username}
+    </select>
+
+    <!-- 删除用户地址 -->
+    <delete id="delUserAddress">
+        delete
+        from useraddress
+        where username = #{username}
+          and uaid = #{userAddressId}
+    </delete>
+
+    <!-- 查询当前用户地址 -->
+    <select id="queryUserAddressByUsername" resultType="string">
+        select address
+        from useraddress
+        where username = #{username}
+    </select>
+</mapper>

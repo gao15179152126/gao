@@ -16,29 +16,85 @@ import java.util.List;
  * @Version 1.0
  **/
 public interface OrderDao {
-    //void autoAddOrder(@Param("order") Order order);
-    //根据用户名查询订单号
+    /**
+     * 查看个人订单
+     *
+     * @param username 1
+     * @return java.util.List<com.shopping.pojo.Order>
+     */
     List<Order> queryOrderByUsername(@Param("username") String username);
-    //根据订单号查询订单内容
+
+    /**
+     * 根据订单号查看订单内容
+     *
+     * @param orderNo 1
+     * @return java.util.List<com.shopping.pojo.OrderDetail>
+     */
     List<OrderDetail> queryOrderDetailByNo(@Param("orderNo") String orderNo);
 
+    /**
+     * 查询所有订单
+     *
+     * @return java.util.List<com.shopping.pojo.Order>
+     */
     List<Order> queryAllOrder();
 
-    //根据当前商品查询库存量
+    /**
+     * 根据当前商品查询库存量
+     *
+     * @param productId 1
+     * @return int
+     */
     int getProductNumberById(@Param("productId") int productId);
-    //生成订单细节
-    int generateOrderDetail(@Param("orderDetail") OrderDetail orderDetail);
-    //生成单号记录
-    int generateOrderNo(@Param("order") Order order);
-    //订单状态改变
-    int changeOrderStatus(@Param("orderNo") String orderNo, @Param("orderStatus") String orderStatus);
-    //订单金额改变
-    int changeOrderMoney(@Param("orderNo") String orderNo, @Param("orderMoney") double orderMoney);
-    //根据订单号查询订单金额
-    double queryOrderMoneyByNo(String orderNo);
-    //查询所有订单时间
-    List<OrderDateTime> queryAllOrderTime();
 
+    /**
+     * 生成订单细节
+     *
+     * @param orderDetail 1
+     * @return int
+     */
+    int generateOrderDetail(@Param("orderDetail") OrderDetail orderDetail);
+
+    /**
+     * 生成单号记录
+     *
+     * @param order 1
+     * @return int
+     */
+    int generateOrderNo(@Param("order") Order order);
+
+    /**
+     * 订单状态改变
+     *
+     * @param orderNo     1
+     * @param orderStatus 2
+     * @return int
+     */
+    int changeOrderStatus(@Param("orderNo") String orderNo, @Param("orderStatus") String orderStatus);
+
+    /**
+     * 订单金额改变
+     *
+     * @param orderNo    1
+     * @param orderMoney 2
+     * @return int
+     */
+    int changeOrderMoney(@Param("orderNo") String orderNo, @Param("orderMoney") double orderMoney);
+
+    /**
+     * 根据订单号查询订单金额
+     *
+     * @param orderNo 1
+     * @return double
+     */
+    double queryOrderMoneyByNo(String orderNo);
+
+    /**
+     * 查询所有订单时间
+     *
+     * @return java.util.List<com.shopping.pojo.dto.OrderDateTime>
+     */
+    List<OrderDateTime> queryAllOrderTime();
 
 
     /**
@@ -69,7 +125,7 @@ public interface OrderDao {
      * 根据起止时间查询订单
      *
      * @param startDate 1
-     * @param endDate 2
+     * @param endDate   2
      * @return java.util.List<com.shopping.pojo.Order>
      */
     List<Order> queryOrderByDate(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
@@ -77,7 +133,7 @@ public interface OrderDao {
     /**
      * 改变订单地址
      *
-     * @param orderNo 1
+     * @param orderNo      1
      * @param orderAddress 2
      * @return int
      */

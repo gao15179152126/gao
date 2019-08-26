@@ -32,20 +32,21 @@ public class JspController {
         this.productService = productService;
     }
 
+    /**
+     * luckincoffee视频页面
+     */
     @RequestMapping("")
     public String luckincoffee() {
         return "luckincoffee";
     }
 
+    /**
+     * 主页
+     */
     @RequestMapping("/home")
     public String home() {
         return "home";
     }
-
-    /*@RequestMapping("/shop")
-    public String shop(){
-        return "shop";
-    }*/
 
     /**
      * 商城展示
@@ -70,6 +71,9 @@ public class JspController {
         return mav;
     }
 
+    /**
+     * 友情链接页面
+     */
     @RequestMapping("/culture")
     public String culture() {
         return "culture";

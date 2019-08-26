@@ -87,7 +87,8 @@ public class UserController {
                     session.removeAttribute("productId");
                     session.removeAttribute("cartNumber");
                     session.removeAttribute("url");
-                    return "redirect:" + url + "1?productId=" + productId + "&cartNumber=" + cartNumber;
+                    String attribute = "1?productId=" + productId + "&cartNumber=" + cartNumber;
+                    return "redirect:" + url + attribute;
                 }
                 session.removeAttribute("url");
                 return "redirect:" + url;

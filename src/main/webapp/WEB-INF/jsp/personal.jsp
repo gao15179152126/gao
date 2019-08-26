@@ -82,7 +82,7 @@
         function submitNewPassword() {
             var passwordNew = $("#passwordNew").val();
             $.post("/user/changePassword?password=" + passwordNew, function (data) {
-                alert("success");
+                alert("修改成功");
                 window.location.reload();
             })
         }

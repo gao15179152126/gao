@@ -46,13 +46,13 @@ public class OrderController {
     @RequestMapping("/submitOrder")
     @ResponseBody
     public Map submitOrder(@RequestBody List<OrderDetail> orderDetails, HttpSession session) {
-        Map<String,String> map = new HashMap<>(1);
+        Map<String, String> map = new HashMap<>(1);
         String username = ((User) session.getAttribute("user")).getUsername();
         String userId = String.valueOf(((User) session.getAttribute("user")).getId());
         int vip = ((User) session.getAttribute("user")).getVip();
         //预设订单号
         String result = orderService.submitOrder(orderDetails, username, userId, vip);
-        map.put("result",result);
+        map.put("result", result);
         //todo 设置订单号值到Attribute
         return map;
     }
@@ -76,10 +76,10 @@ public class OrderController {
     @RequestMapping("/payForOrder")
     @ResponseBody
     public Map payForOrder(HttpSession session, String orderNo, String address) {
-        Map<String,String> map = new HashMap<>(1);
+        Map<String, String> map = new HashMap<>(1);
         User user = (User) session.getAttribute("user");
         String result = orderService.payForOrder(orderNo, user, address);
-        map.put("result",result);
+        map.put("result", result);
         session.setAttribute("user", userService.updateUserInformation(user.getUsername()));
         return map;
     }
@@ -92,6 +92,4 @@ public class OrderController {
     public String cancelOrder(String orderNo) {
         return orderService.cancelOrder(orderNo);
     }
-
-
 }

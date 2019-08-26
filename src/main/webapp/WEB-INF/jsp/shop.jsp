@@ -11,8 +11,25 @@
 <head>
     <jsp:include page="../common/link/head.jsp"></jsp:include>
     <link rel="stylesheet" href="/css/dashboard.css">
-    <link rel="stylesheet" href="/css/shop.css">
     <style type="text/css">
+        .buttonAdd {
+            font-weight: bold;
+            color: white;
+            width: 20px;
+            height: 20px;
+            background-color: #232773;
+            border: none;
+            float: right;
+        }
+        .buttonDel {
+            font-weight: bold;
+            color: white;
+            width: 20px;
+            height: 20px;
+            background-color: #232773;
+            border: none;
+            float: right;
+        }
         input[type=number] {
             -moz-appearance: textfield;
         }

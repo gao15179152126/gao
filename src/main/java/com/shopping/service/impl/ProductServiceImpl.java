@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -25,8 +24,12 @@ import java.util.UUID;
 @Service
 public class ProductServiceImpl implements ProductService {
 
+    private final ProductDao productDao;
+
     @Autowired
-    private ProductDao productDao;
+    public ProductServiceImpl(ProductDao productDao) {
+        this.productDao = productDao;
+    }
 
     @Override
     public List<Product> list() {
@@ -39,8 +42,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    @Transactional
-        public String save(MultipartFile file, Product product, Model model) throws IOException {
+    @Transactional(rollbackFor = Exception.class)
+    public String save(MultipartFile file, Product product, Model model) throws IOException {
         // 保存图片的路径，图片上传成功后，将路径保存到数据库
         String filePath = "C:\\upload";
         // 获取原始图片的扩展名
