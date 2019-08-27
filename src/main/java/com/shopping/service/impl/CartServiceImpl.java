@@ -25,7 +25,6 @@ public class CartServiceImpl implements CartService {
         this.cartDao = cartDao;
     }
 
-    //添加商品到购物车
     @Override
     public void addCart(String username, int productId, int productNumber) {
         if (cartDao.productIsOrNotExistCart(username, productId) > 0) {
@@ -40,7 +39,6 @@ public class CartServiceImpl implements CartService {
         return cartDao.queryCart(username);
     }
 
-    //从购物车删除商品
     @Override
     public void deleteCart(String username, int productId) {
         cartDao.deleteCart(username, productId);
@@ -51,7 +49,6 @@ public class CartServiceImpl implements CartService {
         return cartDao.getProductNameById(productId);
     }
 
-    //商品数量加减
     @Override
     public void cartProductNumberAdd(String username, int productId, int cartNumber) {
         cartDao.cartProductNumberAdd(username, productId, cartNumber);
