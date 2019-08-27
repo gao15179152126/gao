@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * @InterfaceName AddressService
- * @Description TODO
+ * @Description 地址接口
  * @Author Zhaohui.Gao
  * @DateTime 2019/8/22 10:10
  * @Version 1.0
@@ -16,8 +16,8 @@ public interface AddressService {
     /**
      * 增加用户地址
      *
-     * @param username 1
-     * @param address  2
+     * @param username 用户名
+     * @param address  地址
      * @return int
      */
     int addUserAddress(String username, String address);
@@ -25,7 +25,7 @@ public interface AddressService {
     /**
      * 查询用户地址
      *
-     * @param username 1
+     * @param username 用户名
      * @return java.util.List<java.lang.String>
      */
     List<UserAddress> queryUserAddress(String username);
@@ -33,8 +33,8 @@ public interface AddressService {
     /**
      * 删除用户地址
      *
-     * @param username      1
-     * @param userAddressId 2
+     * @param username      用户名
+     * @param userAddressId 用户地址id
      * @return int
      */
     int delUserAddress(String username, int userAddressId);
@@ -42,7 +42,7 @@ public interface AddressService {
     /**
      * 查询当前用户地址
      *
-     * @param username 1
+     * @param username 用户名
      * @return java.util.List<java.lang.String>
      */
     List<String> queryUserAddressByUsername(String username);

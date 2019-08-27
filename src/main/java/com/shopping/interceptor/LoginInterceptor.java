@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * @ClassName LoginInterceptor
- * @Description TODO
+ * @Description 用户拦截器
  * @Author Zhaohui.Gao
  * @DateTime 2019/7/24 13:55
  * @Version 1.0

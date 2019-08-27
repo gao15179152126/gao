@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * @InterfaceName AddressDao
- * @Description TODO
+ * @Description 地址数据层接口
  * @Author Zhaohui.Gao
  * @DateTime 2019/8/22 9:43
  * @Version 1.0
@@ -16,8 +16,8 @@ public interface AddressDao {
     /**
      * 添加用户地址
      *
-     * @param username 1
-     * @param address  2
+     * @param username 用户名
+     * @param address  地址
      * @return int
      */
     int addUserAddress(@Param("username") String username, @Param("address") String address);
@@ -25,7 +25,7 @@ public interface AddressDao {
     /**
      * 查询用户地址
      *
-     * @param username 1
+     * @param username 用户名
      * @return java.util.List<java.lang.String>
      */
     List<UserAddress> queryUserAddress(String username);
@@ -33,8 +33,8 @@ public interface AddressDao {
     /**
      * 删除用户地址
      *
-     * @param username      1
-     * @param userAddressId 2
+     * @param username      用户名
+     * @param userAddressId 用户地址id
      * @return int
      */
     int delUserAddress(@Param("username") String username, @Param("userAddressId") int userAddressId);
@@ -42,7 +42,7 @@ public interface AddressDao {
     /**
      * 查询当前用户地址
      *
-     * @param username 1
+     * @param username 用户名
      * @return java.util.List<java.lang.String>
      */
     List<String> queryUserAddressByUsername(String username);

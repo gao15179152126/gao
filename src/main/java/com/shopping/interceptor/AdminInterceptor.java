@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * @ClassName AdminInterceptor
- * @Description TODO
+ * @Description 管理员拦截器
  * @Author Zhaohui.Gao
  * @DateTime 2019/8/21 16:41
  * @Version 1.0

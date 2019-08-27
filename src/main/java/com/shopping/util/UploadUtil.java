@@ -7,7 +7,7 @@ import java.util.UUID;
 
 /**
  * @ClassName UploadFileUtil
- * @Description TODO
+ * @Description 上传文件工具类
  * @Author Zhaohui.Gao
  * @DateTime 2019/8/14 10:28
  * @Version 1.0

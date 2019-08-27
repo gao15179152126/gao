@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * @InterfaceName OrderDao
- * @Description TODO
+ * @Description 订单数据接口
  * @Author Zhaohui.Gao
  * @DateTime 2019/8/5 10:26
  * @Version 1.0
@@ -19,7 +19,7 @@ public interface OrderDao {
     /**
      * 查看个人订单
      *
-     * @param username 1
+     * @param username 用户名
      * @return java.util.List<com.shopping.pojo.Order>
      */
     List<Order> queryOrderByUsername(@Param("username") String username);
@@ -27,7 +27,7 @@ public interface OrderDao {
     /**
      * 根据订单号查看订单内容
      *
-     * @param orderNo 1
+     * @param orderNo 订单号
      * @return java.util.List<com.shopping.pojo.OrderDetail>
      */
     List<OrderDetail> queryOrderDetailByNo(@Param("orderNo") String orderNo);
@@ -42,7 +42,7 @@ public interface OrderDao {
     /**
      * 根据当前商品查询库存量
      *
-     * @param productId 1
+     * @param productId 商品id
      * @return int
      */
     int getProductNumberById(@Param("productId") int productId);
@@ -50,7 +50,7 @@ public interface OrderDao {
     /**
      * 生成订单细节
      *
-     * @param orderDetail 1
+     * @param orderDetail 订单详情
      * @return int
      */
     int generateOrderDetail(@Param("orderDetail") OrderDetail orderDetail);
@@ -58,7 +58,7 @@ public interface OrderDao {
     /**
      * 生成单号记录
      *
-     * @param order 1
+     * @param order 订单
      * @return int
      */
     int generateOrderNo(@Param("order") Order order);
@@ -66,8 +66,8 @@ public interface OrderDao {
     /**
      * 订单状态改变
      *
-     * @param orderNo     1
-     * @param orderStatus 2
+     * @param orderNo     订单号
+     * @param orderStatus 订单状态
      * @return int
      */
     int changeOrderStatus(@Param("orderNo") String orderNo, @Param("orderStatus") String orderStatus);
@@ -75,8 +75,8 @@ public interface OrderDao {
     /**
      * 订单金额改变
      *
-     * @param orderNo    1
-     * @param orderMoney 2
+     * @param orderNo    订单号
+     * @param orderMoney 订单金额
      * @return int
      */
     int changeOrderMoney(@Param("orderNo") String orderNo, @Param("orderMoney") double orderMoney);
@@ -84,7 +84,7 @@ public interface OrderDao {
     /**
      * 根据订单号查询订单金额
      *
-     * @param orderNo 1
+     * @param orderNo 订单号
      * @return double
      */
     double queryOrderMoneyByNo(String orderNo);
@@ -100,7 +100,7 @@ public interface OrderDao {
     /**
      * 根据订单状态查询订单
      *
-     * @param status 1
+     * @param status 订单状态
      * @return java.util.List<com.shopping.pojo.Order>
      */
     List<Order> queryOrderByStatus(String status);
@@ -108,7 +108,7 @@ public interface OrderDao {
     /**
      * 根据id查询商品名称
      *
-     * @param productId 1
+     * @param productId 商品id
      * @return java.lang.String
      */
     String queryProductNameById(int productId);
@@ -116,7 +116,7 @@ public interface OrderDao {
     /**
      * 根据单号查询订单
      *
-     * @param orderNo 1
+     * @param orderNo 订单号
      * @return com.shopping.pojo.Order
      */
     Order queryOrderByNo(String orderNo);
@@ -124,8 +124,8 @@ public interface OrderDao {
     /**
      * 根据起止时间查询订单
      *
-     * @param startDate 1
-     * @param endDate   2
+     * @param startDate 开始时间
+     * @param endDate   结束时间
      * @return java.util.List<com.shopping.pojo.Order>
      */
     List<Order> queryOrderByDate(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
@@ -133,8 +133,8 @@ public interface OrderDao {
     /**
      * 改变订单地址
      *
-     * @param orderNo      1
-     * @param orderAddress 2
+     * @param orderNo      订单号
+     * @param orderAddress 订单地址
      * @return int
      */
     int changeOrderAddress(@Param("orderNo") String orderNo, @Param("orderAddress") String orderAddress);
