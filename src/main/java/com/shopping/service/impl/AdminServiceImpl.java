@@ -84,6 +84,11 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public int resetPassword(int id) {
+        return userDao.resetPassword(id);
+    }
+
+    @Override
     public List<Product> queryProductByType(String type) {
         return productDao.queryProductByType(type);
     }
@@ -170,6 +175,21 @@ public class AdminServiceImpl implements AdminService {
             orderDetail.setProductName(orderDao.queryProductNameById(orderDetail.getProductId()));
         }
         return orderDetails;
+    }
+
+    @Override
+    public String getProductDetailByProductId(int id) {
+        return productDao.getProductDetailByProductId(id);
+    }
+
+    @Override
+    public int changeProductDetailById(int id, String productDetail) {
+        return productDao.changeProductDetailById(id, productDetail);
+    }
+
+    @Override
+    public int deleteProductById(int id) {
+        return productDao.deleteProductById(id);
     }
 
 }

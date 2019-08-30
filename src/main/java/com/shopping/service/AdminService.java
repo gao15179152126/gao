@@ -68,6 +68,14 @@ public interface AdminService {
     int clearUserPoint(int id);
 
     /**
+     * 重置用户密码
+     *
+     * @param id 用户id
+     * @return int
+     */
+    int resetPassword(int id);
+
+    /**
      * 查询此类所有商品
      *
      * @param type 商品类型
@@ -160,4 +168,29 @@ public interface AdminService {
      * @return java.util.List<com.shopping.pojo.OrderDetail>
      */
     List<OrderDetail> queryOrderDetailByNo(String orderNo);
+
+    /**
+     * 获取商品详情
+     *
+     * @param id 1
+     * @return java.lang.String
+     */
+    String getProductDetailByProductId(int id);
+
+    /**
+     * 修改商品详情
+     *
+     * @param id            商品id
+     * @param productDetail 商品详情
+     * @return int
+     */
+    int changeProductDetailById(int id, String productDetail);
+
+    /**
+     * 通过商品id删除商品
+     *
+     * @param id 商品id
+     * @return int
+     */
+    int deleteProductById(int id);
 }

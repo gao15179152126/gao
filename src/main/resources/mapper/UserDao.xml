@@ -135,6 +135,13 @@
         where id = #{id}
     </update>
 
+    <!-- 重置用户密码 -->
+    <update id="resetPassword">
+        update user
+        set password = '654321'
+        where id = #{id}
+    </update>
+
     <!-- 改变用户余额 -->
     <update id="updateUserBalance">
         update user

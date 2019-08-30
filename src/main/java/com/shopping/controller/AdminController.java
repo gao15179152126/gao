@@ -83,6 +83,17 @@ public class AdminController {
     }
 
     /**
+     * 重置用户密码
+     */
+    @RequestMapping("resetPassword")
+    @ResponseBody
+    public Map resetPassword(int id) {
+        Map<String, Integer> map = new HashMap<>(1);
+        map.put("result", adminService.resetPassword(id));
+        return map;
+    }
+
+    /**
      * 商品库存管理
      */
     @RequestMapping("storehouse")
@@ -153,6 +164,39 @@ public class AdminController {
     }
 
     /**
+     * 获得商品详情
+     */
+    @RequestMapping("getProductDetail")
+    @ResponseBody
+    public Map getProductDetail(int productId) {
+        Map<String, String> map = new HashMap<>(1);
+        map.put("productDetail", adminService.getProductDetailByProductId(productId));
+        return map;
+    }
+
+    /**
+     * 修改商品详情
+     */
+    @RequestMapping("changeProductDetail")
+    @ResponseBody
+    public Map changeProductDetail(int productId, String productDetail) {
+        Map<String, Integer> map = new HashMap<>(1);
+        map.put("result", adminService.changeProductDetailById(productId, productDetail));
+        return map;
+    }
+
+    /**
+     * 删除商品
+     */
+    @RequestMapping("deleteProduct")
+    @ResponseBody
+    public Map deleteProduct(int productId) {
+        Map<String, Integer> map = new HashMap<>(1);
+        map.put("result", adminService.deleteProductById(productId));
+        return map;
+    }
+
+    /**
      * 上架商品
      */
     @RequestMapping("newGoods")
@@ -208,7 +252,10 @@ public class AdminController {
         List<Order> dateOrders = adminService.queryOrderByDate(startDate, endDate);
         double sum = 0;
         for (Order dateOrder : dateOrders) {
-            sum += dateOrder.getOrderMoney();
+            String orderStatus = dateOrder.getOrderStatus();
+            if ("已付款".equals(orderStatus) || "已完成".equals(orderStatus)) {
+                sum += dateOrder.getOrderMoney();
+            }
         }
         String totalPrice = String.format("%.2f", sum);
         model.addAttribute("totalPrice", totalPrice);

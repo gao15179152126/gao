@@ -138,4 +138,12 @@ public interface OrderDao {
      * @return int
      */
     int changeOrderAddress(@Param("orderNo") String orderNo, @Param("orderAddress") String orderAddress);
+
+    /**
+     * 根据订单号查询订单状态
+     *
+     * @param orderNo 订单号
+     * @return java.lang.String
+     */
+    String getOrderStatusByOrderNo(String orderNo);
 }

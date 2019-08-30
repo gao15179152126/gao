@@ -36,12 +36,13 @@ public interface OrderService {
     /**
      * 订单付款
      *
-     * @param orderNo 订单号
-     * @param user    用户
-     * @param address 地址
+     * @param orderNo  订单号
+     * @param user     用户
+     * @param address  地址
+     * @param couponId 优惠券Id
      * @return java.lang.String
      */
-    String payForOrder(String orderNo, User user, String address);
+    String payForOrder(String orderNo, User user, String address, int couponId);
 
     /**
      * 取消订单
@@ -50,4 +51,20 @@ public interface OrderService {
      * @return java.lang.String
      */
     String cancelOrder(String orderNo);
+
+    /**
+     * 根据订单号查询订单状态
+     *
+     * @param orderNo 订单号
+     * @return java.lang.String
+     */
+    String getOrderStatusByOrderNo(String orderNo);
+
+    /**
+     * 根据订单号查询订单金额
+     *
+     * @param orderNo 订单号
+     * @return double
+     */
+    double getOrderMoneyByOrderNo(String orderNo);
 }

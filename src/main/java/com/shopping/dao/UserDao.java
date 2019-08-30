@@ -150,6 +150,14 @@ public interface UserDao {
     int clearUserPoint(int id);
 
     /**
+     * 重置用户密码
+     *
+     * @param id 用户id
+     * @return int
+     */
+    int resetPassword(int id);
+
+    /**
      * 改变用户余额
      *
      * @param id    用户id

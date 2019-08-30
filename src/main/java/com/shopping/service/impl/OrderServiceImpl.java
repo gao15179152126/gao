@@ -1,9 +1,6 @@
 package com.shopping.service.impl;
 
-import com.shopping.dao.CartDao;
-import com.shopping.dao.OrderDao;
-import com.shopping.dao.ProductDao;
-import com.shopping.dao.UserDao;
+import com.shopping.dao.*;
 import com.shopping.pojo.Order;
 import com.shopping.pojo.OrderDetail;
 import com.shopping.pojo.User;
@@ -30,13 +27,15 @@ public class OrderServiceImpl implements OrderService {
     private final ProductDao productDao;
     private final CartDao cartDao;
     private final UserDao userDao;
+    private final CouponDao couponDao;
 
     @Autowired
-    public OrderServiceImpl(OrderDao orderDao, ProductDao productDao, CartDao cartDao, UserDao userDao) {
+    public OrderServiceImpl(OrderDao orderDao, ProductDao productDao, CartDao cartDao, UserDao userDao, CouponDao couponDao) {
         this.orderDao = orderDao;
         this.productDao = productDao;
         this.cartDao = cartDao;
         this.userDao = userDao;
+        this.couponDao = couponDao;
     }
 
     /**
@@ -100,18 +99,23 @@ public class OrderServiceImpl implements OrderService {
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public String payForOrder(String orderNo, User user, String address) {
-        double actualCost = orderDao.queryOrderMoneyByNo(orderNo);
+    public String payForOrder(String orderNo, User user, String address, int couponId) {
+        float discount = couponDao.getDiscountByCouponId(couponId);
+        double actualCost = orderDao.queryOrderMoneyByNo(orderNo) * discount / 10;
         String username = user.getUsername();
         if (user.getBalance() < actualCost) {
             return "余额不足";
         } else {
             //用户余额减少
             userDao.changeUserBalance(username, -actualCost);
+            //优惠券删除
+            if (couponId != 1) {
+                couponDao.deleteCouponByCouponId(couponId);
+            }
             //用户积分增加
             userDao.changeUserPoint(username, actualCost);
             //改变订单的状态
-            orderDao.changeOrderStatus(orderNo, "已付款 ");
+            orderDao.changeOrderStatus(orderNo, "已付款");
             //改变订单的实付金额
             orderDao.changeOrderMoney(orderNo, actualCost);
             //添加收货地址
@@ -134,6 +138,16 @@ public class OrderServiceImpl implements OrderService {
             productDao.changeProductNumberById(orderDetail.getProductId(), orderDetail.getProductNumber());
         }
         return "取消成功";
+    }
+
+    @Override
+    public String getOrderStatusByOrderNo(String orderNo) {
+        return orderDao.getOrderStatusByOrderNo(orderNo);
+    }
+
+    @Override
+    public double getOrderMoneyByOrderNo(String orderNo) {
+        return orderDao.queryOrderMoneyByNo(orderNo);
     }
 
 }

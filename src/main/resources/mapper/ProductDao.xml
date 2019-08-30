@@ -88,4 +88,25 @@
         set pimage = #{image}
         where pid = #{id}
     </update>
+
+    <!-- 获取商品详情 -->
+    <select id="getProductDetailByProductId" resultType="string">
+        select pdetail
+        from product
+        where pid = #{id}
+    </select>
+
+    <!-- 修改商品详情 -->
+    <update id="changeProductDetailById">
+        update product
+        set pdetail = #{detail}
+        where pid = #{id}
+    </update>
+
+    <!-- 通过商品id删除商品 -->
+    <delete id="deleteProductById">
+        delete
+        from product
+        where pid = #{id}
+    </delete>
 </mapper>

@@ -16,10 +16,12 @@
         //支付订单
         function payForOrder(orderNo, button) {
             var address = $(button).parent().parent().prev().children().val();
+            var couponId = $(button).parent().parent().next().children().val();
             if (confirm("确定付款？") == true) {
                 $.post("/order/payForOrder", {
                     orderNo: orderNo,
-                    address: address
+                    address: address,
+                    couponId: couponId
                 }, function (data) {
                     alert(data.result);
                     if (data.result === "付款成功") {
@@ -81,7 +83,7 @@
                 var orderTime = new Date($(this).prev().prev().text());
                 var currentTime = new Date();
 
-                var s1 = orderTime.getTime()+120000, s2 = currentTime.getTime();
+                var s1 = orderTime.getTime() + 120000, s2 = currentTime.getTime();
                 var total = (s1 - s2) / 1000;
 
                 var day = parseInt(total / (24 * 60 * 60));//计算整数天数
@@ -103,7 +105,7 @@
                 if (second < 0) {
                     location.reload()
                 }
-                var delTime = hour+ "时" + min + "分" + second+"秒";
+                var delTime = hour + "时" + min + "分" + second + "秒";
 
                 $(this).text(delTime)
             })
@@ -111,6 +113,17 @@
 
         //每秒中执行一次
         setInterval("timeDel()", 1000);
+
+        //选择优惠券改变金额
+        function changeCoupon(select, orderNo) {
+            var couponId = $(select).val();
+            $.post("/coupon/getDiscount", {couponId: couponId, orderNo: orderNo}, function (data) {
+                var orderMoney = parseFloat(data.orderMoney);
+                var discount = parseFloat(data.discount);
+                var money = $(select).parent().prev().children().children()[0];
+                money.textContent = (orderMoney * discount / 10).toFixed(2);
+            })
+        }
     </script>
 </head>
 <body>
@@ -167,7 +180,15 @@
                     </c:choose>
                     <div>
                         <div style="width: 31%; float: left">
-                            <label style="float: left">总额：￥${personalOrderList.orderMoney}</label>
+                            <c:choose>
+                                <c:when test="${personalOrderList.orderStatus == '未完成'}">
+                                    <label style="color: #d43f3a; font-size: 20px">${personalOrderList.orderMoney}</label>
+                                </c:when>
+                                <c:otherwise>
+                                    <label>${personalOrderList.orderMoney}</label>
+                                </c:otherwise>
+                            </c:choose>
+                            <label style="float: left">总额：￥</label>
                         </div>
                         <div style="width: 69%; float: left">
                             <c:choose>
@@ -180,7 +201,14 @@
                                         取消订单
                                     </button>
                                 </c:when>
+                                <c:when test="${personalOrderList.orderStatus == '已取消'}">
+                                    <button onclick="location.href='/luckincoffee/shop'" style="float: right">再来一单
+                                    </button>
+                                </c:when>
                                 <c:otherwise>
+                                    <button onclick="location.href='/coupon/toShare?orderNo=${personalOrderList.orderNo}'"
+                                            style="float: right">分享领劵
+                                    </button>
                                     <button onclick="location.href='/luckincoffee/shop'" style="float: right">再来一单
                                     </button>
                                 </c:otherwise>
@@ -189,6 +217,14 @@
                     </div>
                     <c:if test="${personalOrderList.orderStatus == '未完成'}">
                         <div style="float: left">
+                            优惠券：
+                            <select onchange="changeCoupon(this,${personalOrderList.orderNo})" name="couponId">
+                                <option value="1">不选择优惠券</option>
+                                <c:forEach items="${userCouponLists}" var="userCouponList">
+                                    <option value="${userCouponList.couponId}">${userCouponList.couponName}</option>
+                                </c:forEach>
+                            </select>
+                            <br>
                             <label style="color: #01AAED">尊贵的VIP${user.vip} 您的会员折扣为：${(1-(0.02*user.vip))*10}折</label>
                         </div>
                     </c:if>

@@ -153,6 +153,19 @@
                 }
             })
         }
+
+        //查看用户优惠券
+        function viewUserCoupon() {
+            $.post("/coupon/viewUserCoupon", function (data) {
+                if (data.couponResult != null) {
+                    var content = "";
+                    $.each(data.couponResult, function (i, userCoupon) {
+                        content += "<li>" + userCoupon + "</li>"
+                    });
+                    $("#couponUl").html(content)
+                }
+            })
+        }
     </script>
 </head>
 <body>
@@ -174,6 +187,12 @@
                         <a class="leftAndRight">
                             <label class="lableLeft">用户名</label>
                             <label class="lableRight">${user.username}</label>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="leftAndRight">
+                            <label class="lableLeft">昵称</label>
+                            <label class="lableRight">${user.name}</label>
                         </a>
                     </li>
                     <li>
@@ -205,6 +224,13 @@
                         <a href="javascript:void(0);" data-toggle="modal" data-target="#addressModal"
                            onclick="viewUserAddress()" class="leftAndRight">
                             <label class="lableLeft">地址</label>
+                            <label class="lableRight">查看</label>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" data-toggle="modal" data-target="#couponModal"
+                           onclick="viewUserCoupon()" class="leftAndRight">
+                            <label class="lableLeft">优惠券</label>
                             <label class="lableRight">查看</label>
                         </a>
                     </li>
@@ -292,6 +318,22 @@
                         </th>
                         <td>地址</td>
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="couponModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <label style="font-size: 20px">已拥有优惠券</label>
+                </div>
+                <div class="modal-body">
+                    <ul id="couponUl">
+                        <li>优惠券1</li>
+                        <li>优惠券2</li>
+                    </ul>
                 </div>
             </div>
         </div>

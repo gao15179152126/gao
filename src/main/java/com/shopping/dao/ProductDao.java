@@ -105,4 +105,29 @@ public interface ProductDao {
      * @return int
      */
     int setProductImageById(@Param("id") int id, @Param("image") String image);
+
+    /**
+     * 获取商品详情
+     *
+     * @param id 1
+     * @return java.lang.String
+     */
+    String getProductDetailByProductId(int id);
+
+    /**
+     * 修改商品详情
+     *
+     * @param id     1
+     * @param detail 2
+     * @return int
+     */
+    int changeProductDetailById(@Param("id") int id, @Param("detail") String detail);
+
+    /**
+     * 通过商品id删除商品
+     *
+     * @param id 商品id
+     * @return int
+     */
+    int deleteProductById(int id);
 }

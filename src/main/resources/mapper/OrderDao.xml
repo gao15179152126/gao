@@ -132,4 +132,11 @@
         set address = #{orderAddress}
         where ono = #{orderNo}
     </update>
+
+    <!-- 根据订单号查询订单状态 -->
+    <select id="getOrderStatusByOrderNo" resultType="string">
+        select ostatus
+        from orderlist
+        where ono = #{orderNo}
+    </select>
 </mapper>

@@ -1,9 +1,11 @@
 package com.shopping.controller;
 
+import com.shopping.pojo.Coupon;
 import com.shopping.pojo.Order;
 import com.shopping.pojo.OrderDetail;
 import com.shopping.pojo.User;
 import com.shopping.service.AddressService;
+import com.shopping.service.CouponService;
 import com.shopping.service.OrderService;
 import com.shopping.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +34,14 @@ public class OrderController {
     private final OrderService orderService;
     private final UserService userService;
     private final AddressService addressService;
+    private final CouponService couponService;
 
     @Autowired
-    public OrderController(OrderService orderService, UserService userService, AddressService addressService) {
+    public OrderController(OrderService orderService, UserService userService, AddressService addressService, CouponService couponService) {
         this.orderService = orderService;
         this.userService = userService;
         this.addressService = addressService;
+        this.couponService = couponService;
     }
 
     /**
@@ -65,8 +69,10 @@ public class OrderController {
         String username = ((User) session.getAttribute("user")).getUsername();
         List<Order> personalOrderLists = orderService.viewPersonalOrder(username);
         List<String> userAddressLists = addressService.queryUserAddressByUsername(username);
+        List<Coupon> userCouponLists = couponService.getCouponByUsername(username);
         model.addAttribute("personalOrderLists", personalOrderLists);
         model.addAttribute("userAddressLists", userAddressLists);
+        model.addAttribute("userCouponLists", userCouponLists);
         return "/personalOrder";
     }
 
@@ -75,10 +81,10 @@ public class OrderController {
      */
     @RequestMapping("/payForOrder")
     @ResponseBody
-    public Map payForOrder(HttpSession session, String orderNo, String address) {
+    public Map payForOrder(HttpSession session, String orderNo, String address, int couponId) {
         Map<String, String> map = new HashMap<>(1);
         User user = (User) session.getAttribute("user");
-        String result = orderService.payForOrder(orderNo, user, address);
+        String result = orderService.payForOrder(orderNo, user, address, couponId);
         map.put("result", result);
         session.setAttribute("user", userService.updateUserInformation(user.getUsername()));
         return map;

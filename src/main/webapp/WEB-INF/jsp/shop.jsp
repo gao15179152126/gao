@@ -21,6 +21,7 @@
             border: none;
             float: right;
         }
+
         .buttonDel {
             font-weight: bold;
             color: white;
@@ -30,6 +31,7 @@
             border: none;
             float: right;
         }
+
         input[type=number] {
             -moz-appearance: textfield;
         }
@@ -256,43 +258,43 @@
                     <c:if test="${product.productType == '大师咖啡'}">
                     <c:choose>
                     <c:when test="${product.productAmount < 1}">
-                        <div class="col-xs-6 col-sm-3 placeholder mask">
-                    </c:when>
-                    <c:otherwise>
+                    <div class="col-xs-6 col-sm-3 placeholder mask">
+                        </c:when>
+                        <c:otherwise>
                         <div class="col-xs-6 col-sm-3 placeholder" onclick="showProduct(${product.productId})"
-                        data-toggle="modal" data-target="#myModal">
-                    </c:otherwise>
-                    </c:choose>
-                       <img src="/upload/${product.productImage}" width="160" height="160"
-                       class="img-responsive" alt="Generic placeholder thumbnail">
-                       <h4>${product.productName}</h4>
-                       <span class="text-muted">￥${product.productPrice}</span>
-                       </div>
-                    </c:if>
-                    </c:forEach>
-                    </div>
-                    <div class="tab-pane fade" id="deerTea" style="text-align: center">
-                        <c:forEach items="${list}" var="product">
-                            <c:if test="${product.productType == '小鹿茶'}">
-                            <c:choose>
-                            <c:when test="${product.productAmount < 1}">
-                            <div class="col-xs-6 col-sm-3 placeholder mask">
-                                </c:when>
-                                <c:otherwise>
-                                <div class="col-xs-6 col-sm-3 placeholder" onclick="showProduct(${product.productId})"
-                                     data-toggle="modal" data-target="#myModal">
-                                    </c:otherwise>
-                                    </c:choose>
-                                    <img src="/upload/${product.productImage}" width="160" height="160"
-                                         class="img-responsive" alt="Generic placeholder thumbnail">
-                                    <h4>${product.productName}</h4>
-                                    <span class="text-muted">￥${product.productPrice}</span>
-                                </div>
-                            </c:if>
+                             data-toggle="modal" data-target="#myModal">
+                            </c:otherwise>
+                            </c:choose>
+                            <img src="/upload/${product.productImage}" width="160" height="160"
+                                 class="img-responsive" alt="Generic placeholder thumbnail">
+                            <h4>${product.productName}</h4>
+                            <span class="text-muted">￥${product.productPrice}</span>
+                        </div>
+                        </c:if>
                         </c:forEach>
                     </div>
-                    <div class="tab-pane fade" id="iceCream" style="text-align: center">
+                    <div class="tab-pane fade" id="deerTea" style="margin-bottom: 0; text-align: center">
                         <c:forEach items="${list}" var="product">
+                        <c:if test="${product.productType == '小鹿茶'}">
+                        <c:choose>
+                        <c:when test="${product.productAmount < 1}">
+                        <div class="col-xs-6 col-sm-3 placeholder mask">
+                            </c:when>
+                            <c:otherwise>
+                            <div class="col-xs-6 col-sm-3 placeholder" onclick="showProduct(${product.productId})"
+                                 data-toggle="modal" data-target="#myModal">
+                                </c:otherwise>
+                                </c:choose>
+                                <img src="/upload/${product.productImage}" width="160" height="160"
+                                     class="img-responsive" alt="Generic placeholder thumbnail">
+                                <h4>${product.productName}</h4>
+                                <span class="text-muted">￥${product.productPrice}</span>
+                            </div>
+                            </c:if>
+                            </c:forEach>
+                        </div>
+                        <div class="tab-pane fade" id="iceCream" style="margin-bottom: 0; text-align: center">
+                            <c:forEach items="${list}" var="product">
                             <c:if test="${product.productType == '瑞纳冰'}">
                             <c:choose>
                             <c:when test="${product.productAmount < 1}">
@@ -308,114 +310,124 @@
                                     <h4>${product.productName}</h4>
                                     <span class="text-muted">￥${product.productPrice}</span>
                                 </div>
-                            </c:if>
-                        </c:forEach>
-                    </div>
-                    <div class="tab-pane fade" id="NFC" style="text-align: center">
-                        <c:forEach items="${list}" var="product">
-                            <c:if test="${product.productType == '鲜榨果汁'}">
-                            <c:choose>
-                            <c:when test="${product.productAmount < 1}">
-                            <div class="col-xs-6 col-sm-3 placeholder mask">
-                                </c:when>
-                                <c:otherwise>
-                                <div class="col-xs-6 col-sm-3 placeholder" onclick="showProduct(${product.productId})"
-                                     data-toggle="modal" data-target="#myModal">
-                                    </c:otherwise>
-                                    </c:choose>
-                                    <img src="/upload/${product.productImage}" width="160" height="160"
-                                         class="img-responsive" alt="Generic placeholder thumbnail">
-                                    <h4>${product.productName}</h4>
-                                    <span class="text-muted">￥${product.productPrice}</span>
-                                </div>
-                            </c:if>
-                        </c:forEach>
-                    </div>
-                    <div class="tab-pane fade" id="lightFood" style="text-align: center">
-                        <c:forEach items="${list}" var="product">
-                            <c:if test="${product.productType == '健康轻食'}">
-                            <c:choose>
-                            <c:when test="${product.productAmount < 1}">
-                            <div class="col-xs-6 col-sm-3 placeholder mask">
-                                </c:when>
-                                <c:otherwise>
-                                <div class="col-xs-6 col-sm-3 placeholder" onclick="showProduct(${product.productId})"
-                                     data-toggle="modal" data-target="#myModal">
-                                    </c:otherwise>
-                                    </c:choose>
-                                    <img src="/upload/${product.productImage}" width="160" height="160"
-                                         class="img-responsive" alt="Generic placeholder thumbnail">
-                                    <h4>${product.productName}</h4>
-                                    <span class="text-muted">￥${product.productPrice}</span>
-                                </div>
-                            </c:if>
-                        </c:forEach>
-                    </div>
-                    <div class="tab-pane fade" id="littleFood" style="text-align: center">
-                        <c:forEach items="${list}" var="product">
-                            <c:if test="${product.productType == '幸运小食'}">
-                            <c:choose>
-                            <c:when test="${product.productAmount < 1}">
-                            <div class="col-xs-6 col-sm-3 placeholder mask">
-                                </c:when>
-                                <c:otherwise>
-                                <div class="col-xs-6 col-sm-3 placeholder" onclick="showProduct(${product.productId})"
-                                     data-toggle="modal" data-target="#myModal">
-                                    </c:otherwise>
-                                    </c:choose>
-                                    <img src="/upload/${product.productImage}" width="160" height="160"
-                                         class="img-responsive" alt="Generic placeholder thumbnail">
-                                    <h4>${product.productName}</h4>
-                                    <span class="text-muted">￥${product.productPrice}</span>
-                                </div>
-                            </c:if>
-                        </c:forEach>
-                    </div>
-                </div>
-                <!-- Modal -->
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                     aria-hidden="true">
-                    <div class="modal-dialog modal-sm">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal"><span
-                                        aria-hidden="true">x</span><span class="sr-only">Close</span></button>
-                                <h4 class="modal-title" id="myModalLabel">商品信息</h4>
+                                </c:if>
+                                </c:forEach>
                             </div>
-                            <div class="modal-body">
-                                <form role="form">
-                                    <div class="form-group">
-                                        <label>商品图片</label>
-                                        <img id="showImage" width="150" height="150" src="">
+                            <div class="tab-pane fade" id="NFC" style="margin-bottom: 0; text-align: center">
+                                <c:forEach items="${list}" var="product">
+                                <c:if test="${product.productType == '鲜榨果汁'}">
+                                <c:choose>
+                                <c:when test="${product.productAmount < 1}">
+                                <div class="col-xs-6 col-sm-3 placeholder mask">
+                                    </c:when>
+                                    <c:otherwise>
+                                    <div class="col-xs-6 col-sm-3 placeholder"
+                                         onclick="showProduct(${product.productId})"
+                                         data-toggle="modal" data-target="#myModal">
+                                        </c:otherwise>
+                                        </c:choose>
+                                        <img src="/upload/${product.productImage}" width="160" height="160"
+                                             class="img-responsive" alt="Generic placeholder thumbnail">
+                                        <h4>${product.productName}</h4>
+                                        <span class="text-muted">￥${product.productPrice}</span>
                                     </div>
-                                    <div class="form-group">
-                                        <label>商品价格</label>
-                                        <label>￥<a id="productPrice"></a>元</label>
+                                    </c:if>
+                                    </c:forEach>
+                                </div>
+                                <div class="tab-pane fade" id="lightFood" style="margin-bottom: 0; text-align: center">
+                                    <c:forEach items="${list}" var="product">
+                                    <c:if test="${product.productType == '健康轻食'}">
+                                    <c:choose>
+                                    <c:when test="${product.productAmount < 1}">
+                                    <div class="col-xs-6 col-sm-3 placeholder mask">
+                                        </c:when>
+                                        <c:otherwise>
+                                        <div class="col-xs-6 col-sm-3 placeholder"
+                                             onclick="showProduct(${product.productId})"
+                                             data-toggle="modal" data-target="#myModal">
+                                            </c:otherwise>
+                                            </c:choose>
+                                            <img src="/upload/${product.productImage}" width="160" height="160"
+                                                 class="img-responsive" alt="Generic placeholder thumbnail">
+                                            <h4>${product.productName}</h4>
+                                            <span class="text-muted">￥${product.productPrice}</span>
+                                        </div>
+                                        </c:if>
+                                        </c:forEach>
                                     </div>
-                                    <div class="form-group">
-                                        <label>商品名称</label>
-                                        <label><a id="productName"></a></label>
-                                        <p class="help-block">商品详情：<a id="productDetail"></a></p>
+                                    <div class="tab-pane fade" id="littleFood"
+                                         style="margin-bottom: 0; text-align: center">
+                                        <c:forEach items="${list}" var="product">
+                                        <c:if test="${product.productType == '幸运小食'}">
+                                        <c:choose>
+                                        <c:when test="${product.productAmount < 1}">
+                                        <div class="col-xs-6 col-sm-3 placeholder mask">
+                                            </c:when>
+                                            <c:otherwise>
+                                            <div class="col-xs-6 col-sm-3 placeholder"
+                                                 onclick="showProduct(${product.productId})"
+                                                 data-toggle="modal" data-target="#myModal">
+                                                </c:otherwise>
+                                                </c:choose>
+                                                <img src="/upload/${product.productImage}" width="160" height="160"
+                                                     class="img-responsive" alt="Generic placeholder thumbnail">
+                                                <h4>${product.productName}</h4>
+                                                <span class="text-muted">￥${product.productPrice}</span>
+                                            </div>
+                                            </c:if>
+                                            </c:forEach>
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label>数量 </label>
-                                        <input class="form-control" style="width: 50%" type="number" id="productNumber"
-                                               name="productNumber" value="1" size="2px"
-                                               onkeyup="value=value.replace(/[^\d]/g,'')">
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+                                         aria-labelledby="myModalLabel"
+                                         aria-hidden="true">
+                                        <div class="modal-dialog modal-sm">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal"><span
+                                                            aria-hidden="true">x</span><span
+                                                            class="sr-only">Close</span></button>
+                                                    <h4 class="modal-title" id="myModalLabel">商品信息</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form role="form">
+                                                        <div class="form-group">
+                                                            <label>商品图片</label>
+                                                            <img id="showImage" width="150" height="150" src="">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>商品价格</label>
+                                                            <label>￥<a id="productPrice"></a>元</label>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>商品名称</label>
+                                                            <label><a id="productName"></a></label>
+                                                            <p class="help-block">商品详情：<a id="productDetail"></a></p>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>数量 </label>
+                                                            <input class="form-control" style="width: 50%" type="number"
+                                                                   id="productNumber"
+                                                                   name="productNumber" value="1" size="2px"
+                                                                   onkeyup="value=value.replace(/[^\d]/g,'')">
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                        关闭
+                                                    </button>
+                                                    <button id="addCart" type="button" class="btn btn-primary submit"
+                                                            onclick="">加入购物车
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                <button id="addCart" type="button" class="btn btn-primary submit" onclick="">加入购物车
-                                </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 </body>
 </html>

@@ -30,7 +30,11 @@
                     $("#noOrderDetails").html(content);
                     var invalidTime = new Date(data.result.orderDate).toLocaleString();
                     $("#noOrderDate").text(invalidTime);
-                    $("#noOrderAddress").text("收货地址：" + data.result.address);
+                    if ("" == data.result.address || data.result.address == null) {
+                        $("#noOrderAddress").text("");
+                    } else {
+                        $("#noOrderAddress").text("收货地址：" + data.result.address);
+                    }
                     $("#noOrderMoney").text("总额￥：" + data.result.orderMoney);
                     $("#noOrderUsername").text("用户名：" + data.result.username);
                     $("#orderNoNotExist").css('display', 'none');
@@ -58,7 +62,7 @@
             </form>
         </div><!-- /.col-lg-6 -->
         <div class="col-lg-2">
-            <label style="color: #252974">合计：${totalPrice}</label>
+            <label style="color: #252974;font-size: 20px">合计：${totalPrice}</label>
         </div>
         <div class="col-lg-4">
             <div class="input-group">
@@ -134,11 +138,9 @@
                         </div>
                     </div>
                     <div>
-                        <c:if test="${!''.equals(dateOrder.address)&&dateOrder.address!=null}">
-                            <div style="width: 100%; float: left">
-                                <label id="noOrderAddress">收货地址：noOrder.address</label>
-                            </div>
-                        </c:if>
+                        <div style="width: 100%; float: left">
+                            <label id="noOrderAddress">收货地址：noOrder.address</label>
+                        </div>
                         <div style="width: 31%; float: left">
                             <label id="noOrderMoney" style="float: left">总额：￥noOrder.orderMoney</label>
                         </div>

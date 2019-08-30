@@ -27,7 +27,7 @@
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
     <!-- 扫描trigger定时器相关的bean -->
-    <context:component-scan base-package="com.shopping.trigger" />
+    <context:component-scan base-package="com.shopping.trigger"/>
     <task:annotation-driven/>
 
 </beans>

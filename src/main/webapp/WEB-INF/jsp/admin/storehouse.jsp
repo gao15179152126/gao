@@ -110,6 +110,42 @@
                 }
             })
         }
+
+        //获取商品详情
+        function getProductDetail(id, productName) {
+            $.post("/admin/getProductDetail", {productId: id}, function (data) {
+                $("#detailProductId").val(id);
+                $("#detailProductName").html(productName);
+                $("#productDetail").val(data.productDetail);
+            })
+        }
+
+        //修改商品详情
+        function changeProductDetail() {
+            var productId = $("#detailProductId").val();
+            var productDetail = $("#productDetail").val();
+            $.post("/admin/changeProductDetail", {productId: productId, productDetail: productDetail}, function (data) {
+                if (data.result == 1) {
+                    alert("修改成功")
+                } else {
+                    alert("修改失败")
+                }
+            })
+        }
+
+        //删除商品
+        function deleteProduct(productId) {
+            if (confirm("确定删除？")) {
+                $.post("/admin/deleteProduct", {productId: productId}, function (data) {
+                    if (data.result == 1) {
+                        alert("删除成功");
+                        location.reload()
+                    } else {
+                        alert("删除失败")
+                    }
+                })
+            }
+        }
     </script>
 
     <style type="text/css">
@@ -147,6 +183,8 @@
                         <th>单价</th>
                         <th>图片</th>
                         <th>数量</th>
+                        <th>详情</th>
+                        <th>操作</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -171,6 +209,16 @@
                                        onkeyup="value=value.replace(/[^\d]/g,'')"
                                        value="${product.productAmount}">
                             </label></td>
+                            <td>
+                                <button class="btn btn-primary"
+                                        onclick="getProductDetail(${product.productId},'${product.productName}')"
+                                        data-toggle="modal" data-target="#detailModal">查看
+                                </button>
+                            </td>
+                            <td>
+                                <button class="btn btn-primary" onclick="deleteProduct(${product.productId})">删除
+                                </button>
+                            </td>
                         </tr>
                     </c:forEach>
                     </tbody>
@@ -180,7 +228,7 @@
     </div>
 </div>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">x</span><span
@@ -208,5 +256,26 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">x</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="detailModalLabel">商品详情</h4>
+            </div>
+            <div class="modal-body">
+                <h4 id="detailProductName" style="text-align: center;margin-top: 0"></h4>
+                <input name="productId" id="detailProductId" type="hidden" value="">
+                <textarea rows="4" class="form-control" id="productDetail" placeholder="商品详情..."></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="changeProductDetail()">修改</button>
+            </div>
+        </div>
+    </div>
+</div>
+<%--商品详情弹框--%>
 </body>
 </html>
