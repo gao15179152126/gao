@@ -1,5 +1,6 @@
 package com.shopping.pojo;
 
+
 /**
  * @ClassName Order
  * @Description TODO
@@ -7,7 +8,7 @@ package com.shopping.pojo;
  * @DateTime 2019/7/31 16:24
  * @Version 1.0
  **/
-public class Cart {
+public class Cart{
     /**
      * 购物车id
      */

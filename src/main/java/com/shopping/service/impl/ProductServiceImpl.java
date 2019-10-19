@@ -4,6 +4,7 @@ import com.shopping.dao.ProductDao;
 import com.shopping.pojo.Product;
 import com.shopping.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -31,11 +32,13 @@ public class ProductServiceImpl implements ProductService {
         this.productDao = productDao;
     }
 
+    @Cacheable(value = "listProduct")
     @Override
     public List<Product> list() {
         return productDao.list();
     }
 
+    @Cacheable(value = "product",key = "'product'+#productId")
     @Override
     public Product queryProductById(int productId) {
         return productDao.queryProductById(productId);
@@ -58,6 +61,4 @@ public class ProductServiceImpl implements ProductService {
         productDao.save(product);
         return "1";
     }
-
-
 }
